@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>Syscom</artifactId>
+    <artifactId>SysCommerc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Syscom</name>
     <description>Syscom</description>
