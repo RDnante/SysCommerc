@@ -1,5 +1,7 @@
 package com.example.syscom.model;
 
+import com.example.syscom.repository.ArticleRepository;
+
 import javax.persistence.*;
 
 @Entity
@@ -62,5 +64,9 @@ public class Stock_fournisseur {
 
     public void setPrix_unitaire(Double prix_unitaire) {
         this.prix_unitaire = prix_unitaire;
+    }
+
+    public void test() {
+        ArticleRepository articleRepository;
     }
 }

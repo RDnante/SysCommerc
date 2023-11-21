@@ -1,6 +1,7 @@
 package com.example.syscom.controller;
 
 import com.example.syscom.model.Article;
+import com.example.syscom.model.Articletest;
 import com.example.syscom.model.Categorie;
 import com.example.syscom.repository.ArticleRepository;
 import com.example.syscom.repository.CategorieRepository;
@@ -20,6 +21,9 @@ public class TestController {
     CategorieRepository categorieRepository;
     @GetMapping("/test")
     public String nom(Model model, HttpServletRequest request) {
+
+        Articletest articletest = new Articletest();
+        articletest.test();
 
         Categorie c = new Categorie();
         c.setNom("Ustensile");

@@ -1,5 +1,9 @@
 package com.example.syscom.model;
 
+import com.example.syscom.repository.ArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity
