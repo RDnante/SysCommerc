@@ -10,4 +10,8 @@ public interface Service_besoinRepository extends JpaRepository<Service_besoin,I
 
     @Query("from Service_besoin where id_service = ?1")
     List<Service_besoin> findbyservice(Integer idservice);
+
+    @Query("from service_besoin where id_service = ?1 and id_article = ?2 and status = 0")
+    Service_besoin getServiceBesoinByIdServiceIdArticle(Integer idService, Integer idArticle);
+
 }

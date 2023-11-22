@@ -2,6 +2,7 @@ package com.example.syscom.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "service_besoin")
@@ -20,10 +21,20 @@ public class Service_besoin {
     Double quantite;
 
     @Column(name = "date")
-    Date date;
+    LocalDate date;
 
     @Column(name = "status")
     Integer status;
+
+    public Service_besoin(Integer id_servicebesoin, Integer id_service, Integer id_article, Double quantite, LocalDate date,
+            Integer status) {
+        this.id_servicebesoin = id_servicebesoin;
+        this.id_service = id_service;
+        this.id_article = id_article;
+        this.quantite = quantite;
+        this.date = date;
+        this.status = status;
+    }
 
     public Service_besoin() {
     }
@@ -60,11 +71,11 @@ public class Service_besoin {
         this.quantite = quantite;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
