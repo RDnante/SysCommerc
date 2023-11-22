@@ -47,3 +47,16 @@ create table stock_fournisseur (
     quantite decimal,
     prix_unitaire decimal
 );
+
+create table bonDeCommande(
+    idBonDeCommande serial primary key,
+    nom varchar(50),
+    date varchar(50),
+    livraisonPartielle boolean,
+    modePaiement varchar(50),
+    categorie varchar(50),
+    designation varchar(50),
+    quantite decimal,
+    tva decimal,
+    ttc decimal
+)

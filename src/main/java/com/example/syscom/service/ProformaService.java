@@ -26,7 +26,7 @@ public class ProformaService {
         String valiny = null;
         List<Stock_fournisseur> stock = new ArrayList<Stock_fournisseur>();
 
-        List<Service_besoin> service = serviceBesoinService.verifBesoin(idservice);
+        List<Service_besoin> service = serviceBesoinService.getBesoinByService(idservice);
         if (service.size() > 0) {
             for (Service_besoin sb : service) {
                 stock.addAll(stockFournisseurRepository.getStockfournisseurbyIdarticle(sb.getId_article()));
