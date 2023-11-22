@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "bonDeCommande")
 public class Commande {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idBonDeCommande")
     Integer numero;
     @Column(name = "nom")

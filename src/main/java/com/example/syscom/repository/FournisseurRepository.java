@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface FournisseurRepository extends JpaRepository<Fournisseur,Integer> {
 
-    @Query("from fournisseur where nom = ?1")
+    @Query("from Fournisseur where nom = ?1")
     public Fournisseur getFournisseurByNom(String nom);
 }

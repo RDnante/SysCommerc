@@ -48,6 +48,8 @@ create table stock_fournisseur (
     prix_unitaire decimal
 );
 
+insert into stock_fournisseur values (default,1,1,150,340);
+
 create table bonDeCommande(
     idBonDeCommande serial primary key,
     nom varchar(50),

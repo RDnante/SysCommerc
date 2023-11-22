@@ -11,6 +11,6 @@ public interface Stock_fournisseurRepository extends JpaRepository<Stock_fournis
     @Query("from Stock_fournisseur where id_article = ?1")
     List<Stock_fournisseur> getStockfournisseurbyIdarticle(Integer idarticle);
 
-    @Query("from stock_fournisseur where id_article = ?1 order by prix_unitaire desc")
+    @Query("from Stock_fournisseur where id_article = ?1 order by prix_unitaire desc")
     List<Stock_fournisseur> getListArticleByPrixUnitaire(Integer idArticle);
 }
