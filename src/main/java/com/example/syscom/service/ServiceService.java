@@ -28,5 +28,31 @@ public class ServiceService {
         }
     }
 
+    public Boolean logRH(ServiceC s)throws Exception{
+        try {
+            if (s.getIdService()==1) {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception("logRH");
+            // TODO: handle exception
+        }
+    }
+
+    // public Boolean logRH(String mdp)throws Exception{
+    //     try {
+    //         if (mdp.equals("12345")) {
+    //             return true;
+    //         }else{
+    //             return false;
+    //         }
+    //     } catch (Exception e) {
+    //         throw new Exception("Error logRH");
+    //         // TODO: handle exception
+    //     }
+    // }
+
     
 }
