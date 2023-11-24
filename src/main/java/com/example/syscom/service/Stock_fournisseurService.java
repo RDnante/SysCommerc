@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.syscom.repository.Service_besoinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +25,24 @@ public class Stock_fournisseurService {
     @Autowired 
     ArticleRepository articleRepository;
     @Autowired
+    Service_besoinService serviceBesoinService;
+    @Autowired
+    Service_besoinRepository serviceBesoinRepository;
+    @Autowired
     CategorieRepository categorieRepository;
 
     public List<Stock_fournisseur> moinsDisant(Integer idService)throws Exception{
         try {
             List<Stock_fournisseur> all = new ArrayList<>();
-            List<Service_besoin> allBesoin = (new Service_besoinService()).getBesoinByService(idService);
+            List<Service_besoin> allBesoin = serviceBesoinRepository.findbyservice(1);
             for (int i = 0; i < allBesoin.size(); i++) {
                 Stock_fournisseur sf = stock_fournisseurRepository.getListArticleByPrixUnitaire(allBesoin.get(i).getId_article()).get(0);
                 all.add(sf);
             }
             return all;
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
             throw new Exception("getAllPrixMora");
             // TODO: handle exception
         }
@@ -68,6 +75,7 @@ public class Stock_fournisseurService {
             }
             return all;
         } catch (Exception e) {
+            System.out.println(e);
             throw new Exception("getAllCommande");
             // TODO: handle exception
         }

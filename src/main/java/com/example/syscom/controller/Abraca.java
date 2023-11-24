@@ -1,8 +1,10 @@
 package com.example.syscom.controller;
 
+import com.example.syscom.model.BonDeCommande;
 import com.example.syscom.model.Proforma;
 import com.example.syscom.model.Service_besoin;
 import com.example.syscom.repository.Service_besoinRepository;
+import com.example.syscom.service.BonDeCommandeService;
 import com.example.syscom.service.ProformaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +26,8 @@ public class Abraca {
     Service_besoinRepository serviceBesoinRepository;
     @Autowired
     ProformaService proformaService;
+    @Autowired
+    BonDeCommandeService bonDeCommandeService;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -81,6 +86,9 @@ public class Abraca {
 
     @GetMapping("/bclist")
     public String bclist(Model model) {
+        List<BonDeCommande> listbd = bonDeCommandeService.listbon(1);
+
+        model.addAttribute("listbon",listbd);
 
         return "boncommandelist";
     }

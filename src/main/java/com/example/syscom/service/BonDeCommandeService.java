@@ -1,9 +1,11 @@
 package com.example.syscom.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.activation.CommandObject;
 
+import com.example.syscom.repository.FournisseurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class BonDeCommandeService {
     ArticleRepository articleRepository;
     @Autowired
     CommandeRepository commandeRepository;
+
+    @Autowired
+    FournisseurRepository fournisseurRepository;
 
     public List<Article> getAllArticle()throws Exception{
         try {
@@ -61,8 +66,10 @@ public class BonDeCommandeService {
 
     public BonDeCommande getBonDeCommandeByFournisseur(Integer idService, Integer idFournisseur)throws Exception{
         try {
-            BonDeCommande init = getBonDeCommande(idService);
+            System.out.println(12123);
+            BonDeCommande init = this.getBonDeCommande(idService);
             List<Commande> cs = init.getCommandes();
+            System.out.println("cs"+cs.size());
             for (int i = 0; i < cs.size(); i++) {
                 Fournisseur f = (new FournisseurService()).getFournisseurByNom(cs.get(i).getNom());
                 if (f.getId_fournisseur()!=idFournisseur) {
@@ -73,9 +80,28 @@ public class BonDeCommandeService {
             init.setSommePrixTtc(getSomme(cs));
             return init;
         } catch (Exception e) {
-            throw new Exception("Error getBonDeCommandeByFournisseur");
+            throw new Exception("Error getBonDeCommandeByFournisseur"+e.getCause());
             // TODO: handle exception
         }
+    }
+
+    public List<BonDeCommande> listbon(Integer idserver) {
+        List<Fournisseur> listf = fournisseurRepository.findAll();
+        List<BonDeCommande> dv = new ArrayList<BonDeCommande>();
+
+        for (Fournisseur f : listf) {
+            try {
+                if (this.getBonDeCommandeByFournisseur(idserver,f.getId_fournisseur()).getCommandes().size() != 0) {
+                    dv.add(this.getBonDeCommandeByFournisseur(idserver,f.getId_fournisseur()));
+                    System.out.println("ato");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+        return dv;
+
     }
 
     public void confirmation(BonDeCommande bdc)throws Exception{

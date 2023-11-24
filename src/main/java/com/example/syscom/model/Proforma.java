@@ -6,6 +6,8 @@ public class Proforma {
     Fournisseur fournisseur;
     List<Stock_fournisseur> listStock;
 
+    List<String> nom;
+
     Double Prixtotal;
 
     public Proforma() {
@@ -13,6 +15,14 @@ public class Proforma {
 
     public Fournisseur getFournisseur() {
         return fournisseur;
+    }
+
+    public List<String> getNom() {
+        return nom;
+    }
+
+    public void setNom(List<String> nom) {
+        this.nom = nom;
     }
 
     public void setFournisseur(Fournisseur fournisseur) {

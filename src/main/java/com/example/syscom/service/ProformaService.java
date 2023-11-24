@@ -1,9 +1,6 @@
 package com.example.syscom.service;
 
-import com.example.syscom.model.Fournisseur;
-import com.example.syscom.model.Proforma;
-import com.example.syscom.model.Service_besoin;
-import com.example.syscom.model.Stock_fournisseur;
+import com.example.syscom.model.*;
 import com.example.syscom.repository.FournisseurRepository;
 import com.example.syscom.repository.Service_besoinRepository;
 import com.example.syscom.repository.Stock_fournisseurRepository;
@@ -21,6 +18,9 @@ public class ProformaService {
     Service_besoinService serviceBesoinService;
     @Autowired
     Stock_fournisseurRepository stockFournisseurRepository;
+
+    @Autowired
+    ArticleService articleService;
 
     @Autowired
     FournisseurRepository fournisseurRepository;
@@ -41,15 +41,26 @@ public class ProformaService {
 
     public Proforma getProformabyent(Integer idservice, Integer idfournisseur) {
         Proforma valiny = new Proforma();
-        List<Stock_fournisseur> list = new ArrayList<Stock_fournisseur>();
-        List<Stock_fournisseur> all = this.getStock_fournisseurByBesoin(idservice);
+        List<Proforma> lp = this.getProforma(idservice);
+        List<String> sa = new ArrayList<String>();
 
-        for (Stock_fournisseur s : all) {
-            if (s.getId_fournisseur().equals(idfournisseur)) {
-                list.add(s);
+        for(Proforma p : lp) {
+            for (Stock_fournisseur s : p.getListStock()) {
+                if (s.getId_fournisseur().equals(idfournisseur)) {
+                    try {
+                        Article a = articleService.getArticleByIdArticle(s.getId_article());
+                        sa.add(a.getNom());
+                    } catch (Exception e) {
+
+                    }
+
+                    return p;
+                }
             }
         }
 
+
+        valiny.setNom(sa);
         valiny.setFournisseur(fournisseurRepository.findById(idfournisseur).get());
 
         return valiny;
