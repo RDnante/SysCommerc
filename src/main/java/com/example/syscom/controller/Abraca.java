@@ -1,8 +1,12 @@
 package com.example.syscom.controller;
 
+import com.example.syscom.model.Article;
 import com.example.syscom.model.BonDeCommande;
+import com.example.syscom.model.Fournisseur;
 import com.example.syscom.model.Proforma;
 import com.example.syscom.model.Service_besoin;
+import com.example.syscom.repository.ArticleRepository;
+import com.example.syscom.repository.FournisseurRepository;
 import com.example.syscom.repository.Service_besoinRepository;
 import com.example.syscom.service.BonDeCommandeService;
 import com.example.syscom.service.ProformaService;
@@ -23,11 +27,15 @@ import java.util.List;
 public class Abraca {
 
     @Autowired
+    FournisseurRepository fournisseurRepository;
+    @Autowired
     Service_besoinRepository serviceBesoinRepository;
     @Autowired
     ProformaService proformaService;
     @Autowired
     BonDeCommandeService bonDeCommandeService;
+    @Autowired
+    ArticleRepository articleRepository;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -49,7 +57,8 @@ public class Abraca {
 
     @GetMapping("/besoin")
     public String besoin(Model model) {
-
+        List<Article> all = articleRepository.findAll();
+        model.addAttribute("article", all);
         return "besoin";
     }
 
@@ -95,7 +104,19 @@ public class Abraca {
 
     @GetMapping("/boncommande")
     public String bc(Model model) {
+        List<Fournisseur> all = fournisseurRepository.findAll();
+        model.addAttribute("fournisseur", all);
+        return "boncommandelist";
+    }
 
+    @GetMapping("/bondctest/{id}")
+    public String getBonDeCommande(Model model,@PathVariable Integer id){
+        try {
+            BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(1, id);
+            model.addAttribute("bdc", b);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         return "boncommande";
     }
 }
