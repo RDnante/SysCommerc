@@ -8,4 +8,7 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur,Integer
 
     @Query("from Fournisseur where nom = ?1")
     public Fournisseur getFournisseurByNom(String nom);
+
+    @Query("from Fournisseur where nom = ?1 and mdp = ?2")
+    public Fournisseur getByNomAndMdp(String nom,String mdp);
 }

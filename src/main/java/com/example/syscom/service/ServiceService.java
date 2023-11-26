@@ -2,6 +2,7 @@ package com.example.syscom.service;
 
 import java.util.List;
 
+import com.example.syscom.repository.Service_besoinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import com.example.syscom.repository.ServiceRepository;
 public class ServiceService {
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    Service_besoinRepository serviceBesoinRepository;
 
     public Integer logService(ServiceC s)throws Exception{
         try {
@@ -41,18 +44,17 @@ public class ServiceService {
         }
     }
 
-    // public Boolean logRH(String mdp)throws Exception{
-    //     try {
-    //         if (mdp.equals("12345")) {
-    //             return true;
-    //         }else{
-    //             return false;
-    //         }
-    //     } catch (Exception e) {
-    //         throw new Exception("Error logRH");
-    //         // TODO: handle exception
-    //     }
-    // }
+    public List<ServiceC> getServiceWithBesoin() {
+        List<ServiceC> valiny = null;
+        List<Integer> idservice = serviceBesoinRepository.getIdserviceWithBesoin();
+
+        for (Integer s : idservice) {
+            ServiceC sc = serviceRepository.findById(s).get();
+            valiny.add(sc);
+        }
+
+        return valiny;
+    }
 
     
 }
