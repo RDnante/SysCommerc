@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -70,6 +67,7 @@ public class Abraca {
         s.setId_article(Integer.valueOf(article));
         s.setQuantite(quantite);
         s.setDate(LocalDate.now());
+        s.setStatus(0);
 
         serviceBesoinRepository.save(s);
 
@@ -114,7 +112,9 @@ public class Abraca {
         try {
             BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(1, id);
             model.addAttribute("bdc", b);
+            System.out.println("1212");
         } catch (Exception e) {
+            e.printStackTrace();
             // TODO: handle exception
         }
         return "boncommande";

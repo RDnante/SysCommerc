@@ -12,13 +12,13 @@
   <title>Accueil</title>
 
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
   <link
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+  <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
 </head>
 
@@ -203,10 +203,11 @@
                   </div>
                 </div>
 
-
+                <!-- <h1 th:text="${bdc.getCommandes().size()}"></h1>
                 <div th:each="b : ${bdc.getCommandes()}">
+                  <h1>4545</h1>
                   <p th:text="${b.getNom()}"></p>
-                </div>
+                </div> -->
 
                 
                 <div class="row" >
@@ -248,51 +249,36 @@
                       </div>
                       <div class="card-body">
                         <div class="table-responsive">
-                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" th:each="">
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
+                              <th>Nom</th>
+                              <th>Date</th>
+                              <th>Livraison partielle</th>
+                              <th>Mode de paiement</th>
+                              <th>Categorie</th>
                               <th>Designation</th>
-                              <th>categorie</th>
                               <th>Quantite</th>
-                              <th>Prix Unitaire HT</th>
+                              <th>Prix unitaire</th>
                               <th>TVA</th>
-                              <th>Prix Unitaire TTC</th>
+                              <th>TTC</th>
+                    
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                              <th style="border: none"></th>
-                              <th style="border: none"></th>
-                              <th style="border: none"></th>
-                              <th>Total</th>
-                              <th>TVA total</th>
-                              <th>Prix Unitaire TTC total</th>
-                            </tr>
-                            <tr>
-                              <th style="border: none"></th>
-                              <th style="border: none"></th>
-                              <th style="border: none"></th>
-                              <th>100000 ar</th>
-                              <th>1000 ar</th>
-                              <th>10000 ar</th>
-                            </tr>
-                            </tfoot>
+                        
+                            
                             <tbody>
-                            <tr>
-                              <td>Tiger Nixon</td>
-                              <td>System Architect</td>
-                              <td>Edinburgh</td>
-                              <td>100000  ar</td>
-                              <td>100 ar</td>
-                              <td>100100 ar</td>
-                            </tr>
-                            <tr>
-                              <td>Tiger Nixon</td>
-                              <td>System Architect</td>
-                              <td>Edinburgh</td>
-                              <td>100000  ar</td>
-                              <td>100 ar</td>
-                              <td>100100 ar</td>
+                            <tr th:each="b : ${bdc.getCommandes()}">
+                              <td th:text="${b.getNom()}"></td>
+                              <td th:text="${b.getDate()}"></td>
+                              <td th:text="${b.getLivraisonPartielle()}"></td>
+                              <td th:text="${b.getModePaiement()}"></td>
+                              <td th:text="${b.getCategorie()}"></td>
+                              <td th:text="${b.getDesignation()}"></td>
+                              <td th:text="${b.getQuantite()}"></td>
+                              <td th:text="${b.getPrixUnitaire()}"></td>
+                              <td th:text="${b.getTva()}"></td>
+                              <td th:text="${b.getTtc()}"></td>
                             </tr>
                             </tbody>
                           </table>
@@ -304,7 +290,7 @@
                 <!--               remerciements -->
                 <div class="row">
                   <div class="col-lg-8 offset-lg-4">
-                    <p>arrete le present bon de commande a la somme de : <span style="color: #2d2e33; font-size: large">neuf cent mille ariary</span></p>
+                    <p>arrete le present bon de commande a la somme de : <span style="color: #2d2e33; font-size: large" th:text="${bdc.getSommePrixTtc()}"></span></p>
                   </div>
                 </div>
               </div>

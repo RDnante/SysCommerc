@@ -26,9 +26,12 @@ public class BonDeCommandeService {
     ArticleRepository articleRepository;
     @Autowired
     CommandeRepository commandeRepository;
-
     @Autowired
     FournisseurRepository fournisseurRepository;
+    @Autowired
+    FournisseurService fournisseurService;
+    @Autowired
+    Stock_fournisseurService stock_fournisseurService;
 
     public List<Article> getAllArticle()throws Exception{
         try {
@@ -55,7 +58,7 @@ public class BonDeCommandeService {
     public BonDeCommande getBonDeCommande(Integer Service)throws Exception{
         try {
             BonDeCommande bdc = new BonDeCommande();
-            bdc.setCommandes((new Stock_fournisseurService()).getAllCommande(Service));
+            bdc.setCommandes(stock_fournisseurService.getAllCommande(Service));
             bdc.setSommePrixTtc(getSomme(bdc.getCommandes()));
             return bdc;
         } catch (Exception e) {
@@ -71,7 +74,7 @@ public class BonDeCommandeService {
             List<Commande> cs = init.getCommandes();
             System.out.println("cs"+cs.size());
             for (int i = 0; i < cs.size(); i++) {
-                Fournisseur f = (new FournisseurService()).getFournisseurByNom(cs.get(i).getNom());
+                Fournisseur f = fournisseurService.getFournisseurByNom(cs.get(i).getNom());
                 if (f.getId_fournisseur()!=idFournisseur) {
                     cs.remove(i);
                 }
@@ -80,6 +83,7 @@ public class BonDeCommandeService {
             init.setSommePrixTtc(getSomme(cs));
             return init;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Error getBonDeCommandeByFournisseur"+e.getCause());
             // TODO: handle exception
         }
@@ -110,6 +114,7 @@ public class BonDeCommandeService {
                 commandeRepository.save(bdc.getCommandes().get(i));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Error confirmation");
             // TODO: handle exception
         }
