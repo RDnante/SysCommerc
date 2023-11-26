@@ -18,10 +18,8 @@ public class ProformaService {
     Service_besoinService serviceBesoinService;
     @Autowired
     Stock_fournisseurRepository stockFournisseurRepository;
-
     @Autowired
     ArticleService articleService;
-
     @Autowired
     FournisseurRepository fournisseurRepository;
 

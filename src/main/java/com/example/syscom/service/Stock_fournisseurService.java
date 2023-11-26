@@ -30,7 +30,9 @@ public class Stock_fournisseurService {
     Service_besoinRepository serviceBesoinRepository;
     @Autowired
     CategorieRepository categorieRepository;
-
+    @Autowired
+    FournisseurService fournisseurService;
+    
     public List<Stock_fournisseur> moinsDisant(Integer idService)throws Exception{
         try {
             List<Stock_fournisseur> all = new ArrayList<>();
@@ -56,8 +58,8 @@ public class Stock_fournisseurService {
                 Commande c = new Commande();
                 Article a = articleRepository.findById(allSF.get(i).getId_article()).get();
                 Categorie ca = categorieRepository.findById(a.getId_categorie()).get();
-                Service_besoin sb = (new Service_besoinService()).getBesoinByServiceByIdArticle(idService, a.getId_article());
-                Fournisseur f = (new FournisseurService()).getFournisseurByIdFournisseur(allSF.get(i).getId_fournisseur());
+                Service_besoin sb = serviceBesoinService.getBesoinByServiceByIdArticle(idService, a.getId_article());
+                Fournisseur f = fournisseurService.getFournisseurByIdFournisseur(allSF.get(i).getId_fournisseur());
                 c.setNom(f.getNom());
                 c.setCategorie(ca.getNom());
                 c.setDate(String.valueOf(LocalDate.now()));
@@ -75,7 +77,7 @@ public class Stock_fournisseurService {
             }
             return all;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new Exception("getAllCommande");
             // TODO: handle exception
         }

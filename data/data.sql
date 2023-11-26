@@ -11,3 +11,5 @@ insert into fournisseur values (default,'jumbo');
 insert into fournisseur values (default,'cosmos');
 
 insert into stock_fournisseur values (default,1,1,150,340);
+insert into stock_fournisseur values (default,2,2,150,340);
+insert into stock_fournisseur values (default,1,2,150,340);

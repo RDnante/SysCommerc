@@ -3,7 +3,6 @@ package com.example.syscom.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.syscom.model.Categorie;
 import com.example.syscom.model.Fournisseur;
 import com.example.syscom.repository.FournisseurRepository;
 

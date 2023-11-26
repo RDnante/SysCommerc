@@ -1,5 +1,5 @@
 create database syscom;
-
+\c syscom
 create table service (
     id_service serial primary key,
     nom varchar(30),
