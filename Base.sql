@@ -37,10 +37,8 @@ create table fournisseur (
     nom varchar(50)
 );
 
-alter table fournisseur add column mdp varchar(40);
-
-insert into fournisseur values (default,'jumbo','1234');
-insert into fournisseur values (default,'cosmos','4321');
+insert into fournisseur values (default,'jumbo');
+insert into fournisseur values (default,'cosmos');
 
 create table stock_fournisseur (
     id_stock_fournisseur serial primary key,
@@ -63,4 +61,4 @@ create table bonDeCommande(
     quantite decimal,
     tva decimal,
     ttc decimal
-)
+);

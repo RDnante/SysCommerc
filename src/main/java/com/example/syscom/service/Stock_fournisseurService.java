@@ -38,8 +38,11 @@ public class Stock_fournisseurService {
             List<Stock_fournisseur> all = new ArrayList<>();
             List<Service_besoin> allBesoin = serviceBesoinRepository.findbyservice(1);
             for (int i = 0; i < allBesoin.size(); i++) {
-                Stock_fournisseur sf = stock_fournisseurRepository.getListArticleByPrixUnitaire(allBesoin.get(i).getId_article()).get(0);
-                all.add(sf);
+                Stock_fournisseur sf = new Stock_fournisseur();
+                if (!stock_fournisseurRepository.getListArticleByPrixUnitaire(allBesoin.get(i).getId_article()).isEmpty()) {
+                    sf = stock_fournisseurRepository.getListArticleByPrixUnitaire(allBesoin.get(i).getId_article()).get(0);
+                    all.add(sf);
+                }
             }
             return all;
         } catch (Exception e) {
