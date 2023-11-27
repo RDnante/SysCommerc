@@ -1,15 +1,15 @@
 package com.example.syscom.controller;
 
-import com.example.syscom.model.Article;
-import com.example.syscom.model.BonDeCommande;
-import com.example.syscom.model.Fournisseur;
-import com.example.syscom.model.Proforma;
-import com.example.syscom.model.Service_besoin;
+import com.example.syscom.model.*;
 import com.example.syscom.repository.ArticleRepository;
 import com.example.syscom.repository.FournisseurRepository;
+import com.example.syscom.repository.ServiceRepository;
 import com.example.syscom.repository.Service_besoinRepository;
 import com.example.syscom.service.BonDeCommandeService;
 import com.example.syscom.service.ProformaService;
+import com.example.syscom.service.ServiceService;
+import com.example.syscom.service.Service_besoinService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,6 +36,12 @@ public class Abraca {
     BonDeCommandeService bonDeCommandeService;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    Service_besoinService serviceBesoinService;
+    @Autowired
+    ServiceService serviceService;
+    @Autowired
+    ServiceRepository serviceRepository;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -118,5 +127,61 @@ public class Abraca {
             // TODO: handle exception
         }
         return "boncommande";
+    }
+
+    @GetMapping("/loginfournisseur")
+    public String  loginfournisseur(Model model){
+
+        return "loginfournisseur";
+    }
+
+    @GetMapping("/acceuilfournisseur")
+    public String acceuilfournisseur(Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("idfournisseur") != null) {
+            return "acceuilFournisseur";
+        }
+        else {
+            return "redirect:/loginfournisseur";
+        }
+
+    }
+
+    @PostMapping("/veriffournisseur")
+    public String veriffournisseur(Model model, HttpServletRequest request, @RequestParam("nom") String nom, @RequestParam("mdp") String mdp) {
+        Fournisseur f = fournisseurRepository.getFournisseurByNomAndByMdp(nom,mdp);
+        if (f != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("idfournisseur",f.getId_fournisseur());
+
+            return "acceuilFournisseur";
+        }
+        else {
+            return "loginfournisseur";
+        }
+    }
+
+    @GetMapping("/fournisseur/listbesoin")
+    public String listbesoin(Model model) {
+        List<ServiceC> list = serviceService.getServiceWithBesoin();
+
+        model.addAttribute("listservice",list);
+
+        return "listbesoin";
+    }
+
+    @GetMapping("/fournisseur/besoin/{id}")
+    public String besoin(Model model,HttpServletRequest request, @PathVariable Integer id) {
+        HttpSession session = request.getSession();
+        String stringid = session.getAttribute("idfournisseur").toString();
+        Integer idfournisseur = Integer.valueOf(stringid);
+        List<VerifStock> verifStocks = serviceBesoinService.getVerifStock(id,idfournisseur);
+
+        ServiceC service  = serviceRepository.findById(id).get();
+
+        model.addAttribute("listverifbesoin",verifStocks);
+        model.addAttribute("service",service);
+
+        return "verifbesoin";
     }
 }

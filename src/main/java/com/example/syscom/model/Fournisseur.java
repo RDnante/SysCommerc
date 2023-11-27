@@ -12,6 +12,9 @@ public class Fournisseur {
     @Column(name = "nom")
     String nom;
 
+    @Column(name = "mdp")
+    String mdp;
+
     public Fournisseur() {
     }
 
@@ -29,5 +32,13 @@ public class Fournisseur {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public String getMdp() {
+        return mdp;
+    }
+
+    public void setMdp(String mdp) {
+        this.mdp = mdp;
     }
 }

@@ -34,11 +34,12 @@ create table service_besoin (
 
 create table fournisseur (
     id_fournisseur serial primary key,
-    nom varchar(50)
+    nom varchar(50),
+    mdp varchar(50)
 );
 
-insert into fournisseur values (default,'jumbo');
-insert into fournisseur values (default,'cosmos');
+insert into fournisseur values (default,'jumbo','1234');
+insert into fournisseur values (default,'cosmos','4321');
 
 create table stock_fournisseur (
     id_stock_fournisseur serial primary key,

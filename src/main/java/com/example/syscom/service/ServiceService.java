@@ -1,7 +1,9 @@
 package com.example.syscom.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.syscom.repository.Service_besoinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import com.example.syscom.repository.ServiceRepository;
 public class ServiceService {
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    Service_besoinRepository serviceBesoinRepository;
 
     public Integer logService(ServiceC s)throws Exception{
         try {
@@ -54,5 +58,17 @@ public class ServiceService {
     //     }
     // }
 
-    
+    public List<ServiceC> getServiceWithBesoin() {
+        List<Integer> listid = serviceBesoinRepository.getidserviceWithBesoin();
+        List<ServiceC> valiny = new ArrayList<ServiceC>();
+
+        for(Integer i : listid) {
+            ServiceC s = serviceRepository.findById(i).get();
+            valiny.add(s);
+        }
+
+        return valiny;
+    }
+
+
 }

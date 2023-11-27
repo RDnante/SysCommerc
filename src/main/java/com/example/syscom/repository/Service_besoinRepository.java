@@ -14,4 +14,7 @@ public interface Service_besoinRepository extends JpaRepository<Service_besoin,I
     @Query("from Service_besoin where id_service = ?1 and id_article = ?2 and status =0")
     Service_besoin getServiceBesoinByIdServiceIdArticle(Integer idService, Integer idArticle);
 
+    @Query("select a.id_servicebesoin from Service_besoin as a group by a.id_servicebesoin")
+    public List<Integer> getidserviceWithBesoin();
+
 }
