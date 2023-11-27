@@ -49,10 +49,27 @@ public class Abraca {
         return "index";
     }
 
-    @PostMapping("/dash")
-    public String dash(Model model) {
+    @GetMapping("/deconnexion")
+    public String deconnexion(Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
 
-        return "acceuil";
+        return "index";
+    }
+
+    @PostMapping("/dash")
+    public String dash(Model model, HttpServletRequest request,@RequestParam("nom") String nom,@RequestParam("mdp") String mdp) {
+
+        ServiceC s = serviceRepository.loginServie(nom,mdp);
+        if (s != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("idservice",s.getIdService());
+
+            return "acceuil";
+        }
+        else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/dash")
@@ -84,8 +101,11 @@ public class Abraca {
     }
 
     @GetMapping("/listproforma")
-    public String list(Model model) {
-        List<Proforma> list = proformaService.getProforma(1);
+    public String list(Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String si = session.getAttribute("idservice").toString();
+        Integer idservice = Integer.valueOf(si);
+        List<Proforma> list = proformaService.getProforma(idservice);
         System.out.println("size list"+list.size());
         model.addAttribute("listproforma",list);
 
@@ -93,16 +113,22 @@ public class Abraca {
     }
 
     @GetMapping("/proforma/{id}")
-    public String proforma(Model model, @PathVariable Integer id) {
-        Proforma p = proformaService.getProformabyent(1,id);
+    public String proforma(Model model, HttpServletRequest request,@PathVariable Integer id) {
+        HttpSession session = request.getSession();
+        String si = session.getAttribute("idservice").toString();
+        Integer idservice = Integer.valueOf(si);
+        Proforma p = proformaService.getProformabyent(idservice,id);
         model.addAttribute("proforma",p);
 
         return "proforma";
     }
 
     @GetMapping("/bclist")
-    public String bclist(Model model) {
-        List<BonDeCommande> listbd = bonDeCommandeService.listbon(1);
+    public String bclist(Model model,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String si = session.getAttribute("idservice").toString();
+        Integer idservice = Integer.valueOf(si);
+        List<BonDeCommande> listbd = bonDeCommandeService.listbon(idservice);
 
         model.addAttribute("listbon",listbd);
 
@@ -117,9 +143,12 @@ public class Abraca {
     }
 
     @GetMapping("/bondctest/{id}")
-    public String getBonDeCommande(Model model,@PathVariable Integer id){
+    public String getBonDeCommande(Model model,@PathVariable Integer id,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String si = session.getAttribute("idservice").toString();
+        Integer idservice = Integer.valueOf(si);
         try {
-            BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(1, id);
+            BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(idservice, id);
             model.addAttribute("bdc", b);
             System.out.println("1212");
         } catch (Exception e) {
