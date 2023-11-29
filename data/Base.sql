@@ -40,8 +40,8 @@ create table stock_fournisseur (
     prix_unitaire decimal
 );
 
-create table bonDeCommande(
-    idBonDeCommande serial primary key,
+create table commande(
+    idCommande serial primary key,
     nom varchar(50),
     date varchar(50),
     livraisonPartielle boolean,
@@ -51,4 +51,16 @@ create table bonDeCommande(
     quantite decimal,
     tva decimal,
     ttc decimal
+);
+
+create table bonDeCommande (
+    idBonDeCommande serial primary key,
+    id_fournisseur int references fournisseur(id_fournisseur),
+    dateConfirmation DATE DEFAULT CURRENT_DATE
+);
+
+create table bonDeCommande_commandes (
+    idBonDeCommande_commande serial primary key,
+    idBonDeCommande int references  bonDeCommande(idBonDeCommande),
+    idCommande int references commande(idCommande)
 );

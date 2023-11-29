@@ -1,5 +1,6 @@
 package com.example.syscom.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.syscom.model.Article;
 import com.example.syscom.model.BonDeCommande;
+import com.example.syscom.model.BonDeCommandeB;
 import com.example.syscom.model.Commande;
 import com.example.syscom.model.Fournisseur;
 import com.example.syscom.model.Stock_fournisseur;
 import com.example.syscom.repository.ArticleRepository;
+import com.example.syscom.repository.BonDeCommandeBRepository;
 import com.example.syscom.repository.CommandeRepository;
 import com.example.syscom.repository.Stock_fournisseurRepository;
 
@@ -32,6 +35,8 @@ public class BonDeCommandeService {
     FournisseurService fournisseurService;
     @Autowired
     Stock_fournisseurService stock_fournisseurService;
+    @Autowired
+    BonDeCommandeBRepository bonDeCommandeBRepository;
 
     public List<Article> getAllArticle()throws Exception{
         try {
@@ -108,8 +113,12 @@ public class BonDeCommandeService {
 
     }
 
-    public void confirmation(BonDeCommande bdc)throws Exception{
+    public void confirmation(BonDeCommande bdc, Integer idFournisseur)throws Exception{
         try {
+            BonDeCommandeB b = new BonDeCommandeB();
+            b.setIdFournisseur(idFournisseur);
+            b.setDateConfirmation(String.valueOf(LocalDate.now()));
+            bonDeCommandeBRepository.save(b);
             for (int i = 0; i < bdc.getCommandes().size(); i++) {
                 commandeRepository.save(bdc.getCommandes().get(i));
             }

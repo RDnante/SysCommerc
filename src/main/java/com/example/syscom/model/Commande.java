@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name = "bonDeCommande")
+@Table(name = "commande")
 public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idBonDeCommande")
+    @Column(name = "idCommande")
     Integer numero;
     @Column(name = "nom")
     String nom;
