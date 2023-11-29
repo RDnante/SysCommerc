@@ -5,6 +5,7 @@ import java.util.List;
 public class BonDeCommande {
     List<Commande> commandes;
     double sommePrixTtc;
+    Boolean status;
     public BonDeCommande(List<Commande> commandes, double sommePrixTtc) {
         this.commandes = commandes;
         this.sommePrixTtc = sommePrixTtc;

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -136,9 +137,22 @@ public class Abraca {
     }
 
     @GetMapping("/boncommande")
-    public String bc(Model model) {
-        List<Fournisseur> all = fournisseurRepository.findAll();
-        model.addAttribute("fournisseur", all);
+    public String bc(Model model,HttpServletRequest request) {
+         try {
+             HttpSession session = request.getSession();
+             Integer idservice = Integer.valueOf(session.getAttribute("idservice").toString());
+             List<Fournisseur> all = fournisseurRepository.findAll();
+             List<Fournisseur> allOk = new ArrayList<>();
+             for (int i = 0; i < all.size(); i++) {
+                 System.out.println("hgdjgzjdg");
+                 if(bonDeCommandeService.getBonDeCommandeByFournisseur(idservice,all.get(i).getId_fournisseur()).getCommandes().size()!=0){
+                    allOk.add(all.get(i));
+                 }
+             }
+             model.addAttribute("fournisseur", allOk);
+         } catch (Exception e) {
+             System.out.println(e);
+         }
         return "boncommandelist";
     }
 
