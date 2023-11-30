@@ -9,16 +9,16 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Bon de commande</title>
+  <title>Accueil</title>
 
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
   <link
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+  <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
 </head>
 
@@ -180,36 +180,123 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Liste bon de commande</h1>
+          <h1 class="h3 mb-0 text-gray-800">proforma</h1>
+          <button id="btnpdf" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                  class="fas fa-download fa-sm text-white-50"></i> telecharger pdf</button>
         </div>
 
-        <div class="row">
-                    <div class="col-xl-6 col-md-6 mb-4" th:each="f : ${fournisseur}">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                          <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" th:text="${f.getNom()}">
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${f.getId_fournisseur()}"></div>
-                              <div class="col-auto">
-                                <a th:href="@{'/bondctest/'+${f.getId_fournisseur()}}">
-                                  <i class="fas fa-eye fa-2x text-gray-300"></i>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
+        <!-- vatany eto -->
+        <div class="row justify-content-center" id="boncommande">
+          <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+              <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                  <div class="col-lg-8 offset-lg-2">
+                    <div class="p-5">
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4"> Bon de Commande confirmés</h1>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <h1 th:text="${bdc.getCommandes().size()}"></h1>
+                <div th:each="b : ${bdc.getCommandes()}">
+                  <h1>4545</h1>
+                  <p th:text="${b.getNom()}"></p>
+                </div> -->
+
+                
+                <div class="row" >
+                  <div class="col-lg-11 offset-lg-1">
+                    <h3 class="h3" style="color: #1c294e">Date :<span style="color:darkgray"> 28/10/2003</span></h3>
+                  </div>
+                </div>
+
+                <div class="row" >
+                  <div class="col-lg-11 offset-lg-1">
+                    <h5 style="color: #1c294e">numero :<span style="color:darkgray"> 23/10/3</span></h5>
+                  </div>
+                </div>
+
+                <div class="row" >
+                  <div class="col-lg-11 offset-lg-1">
+                    <h5 style="color: #1c294e">Livraison :<span style="color:darkgray"> partielle</span></h5>
+                  </div>
+                </div>
+
+                <div class="row" >
+                  <div class="col-lg-11 offset-lg-1">
+                    <h5 style="color: #1c294e">paiement :<span style="color:darkgray"> check</span></h5>
+                  </div>
+                </div>
+
+                <!--            text introduction proforma    -->
+                <div class="row" >
+                  <div class="col-lg-11 offset-lg-1">
+                    <p>voici la liste des articles que nous avons par rapport a vos attentes :</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-10 offset-lg-1">
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Liste des articles</h6>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                              <th>Nom</th>
+                              <th>Date</th>
+                              <th>Livraison partielle</th>
+                              <th>Mode de paiement</th>
+                              <th>Categorie</th>
+                              <th>Designation</th>
+                              <th>Quantite</th>
+                              <th>Prix unitaire</th>
+                              <th>TVA</th>
+                              <th>TTC</th>
+                    
+                            </tr>
+                            </thead>
+                        
+                            
+                            <tbody>
+                            <tr th:each="b : ${bdc.getCommandes()}">
+                              <td th:text="${b.getNom()}"></td>
+                              <td th:text="${b.getDate()}"></td>
+                              <td th:text="${b.getLivraisonPartielle()}"></td>
+                              <td th:text="${b.getModePaiement()}"></td>
+                              <td th:text="${b.getCategorie()}"></td>
+                              <td th:text="${b.getDesignation()}"></td>
+                              <td th:text="${b.getQuantite()}"></td>
+                              <td th:text="${b.getPrixUnitaire()}"></td>
+                              <td th:text="${b.getTva()}"></td>
+                              <td th:text="${b.getTtc()}"></td>
+                            </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
-          
-          
+                  </div>
                 </div>
+                <!--               remerciements -->
+                <div class="row">
+                  <div class="col-lg-8 offset-lg-4">
+                    <p>arrete le present bon de commande a la somme de : <span style="color: #2d2e33; font-size: large" th:text="${bdc.getSommePrixTtc()}"></span></p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
 
 
@@ -274,9 +361,16 @@
 <script th:src="@{vendor/chart.js/Chart.min.js}"></script>
 
 <!-- Page level custom scripts -->
-<script th:src="@{js/demo/chart-area-demo.js}"></script>
-<script th:src="@{js/demo/chart-pie-demo.js}"></script>
+<script th:src="@{/js/demo/chart-area-demo.js}"></script>
+<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+<script th:src="@{/ html2pdf/dist/html2pdf.bundle.js}"></script>
 
+<script>
+  document.getElementById("btnpdf").addEventListener('click', function () {
+    var element = document.getElementById("boncommande");
+    html2pdf(element);
+  });
+</script>
 </body>
 
 </html>
