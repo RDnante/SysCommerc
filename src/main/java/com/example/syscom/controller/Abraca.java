@@ -172,6 +172,23 @@ public class Abraca {
         return "boncommande";
     }
 
+    @GetMapping("/confirmation/{id}")
+    public String confirmation(Model model,@PathVariable Integer id,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String si = session.getAttribute("idservice").toString();
+        Integer idservice = Integer.valueOf(si);
+        try {
+            BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(idservice, id);
+            bonDeCommandeService.confirmation(b, id);
+            // model.addAttribute("bdc", b);
+            // System.out.println("1212");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+        return "boncommande";
+    }
+
     @GetMapping("/loginfournisseur")
     public String  loginfournisseur(Model model){
 

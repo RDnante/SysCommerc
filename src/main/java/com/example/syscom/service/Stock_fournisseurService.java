@@ -71,6 +71,7 @@ public class Stock_fournisseurService {
                 c.setDesignation(a.getNom());
                 c.setQuantite(sb.getQuantite());
                 c.setPrixUnitaire(allSF.get(i).getPrix_unitaire());
+                c.setIdServiceBesoin(sb.getId_servicebesoin());
                 double prix = sb.getQuantite()*allSF.get(i).getPrix_unitaire();
                 double tva = (prix*20)/100;
                 double ttc = prix + tva;

@@ -39,11 +39,14 @@ public class Commande {
     double tva;
     @Column(name = "ttc")
     double ttc;
-    public Commande(String nom, String date, Integer numero, Boolean livraisonPartielle, String modePaiement,
-            String categorie, String designation, double quantite, double prixUnitaire, double tva, double ttc) {
+    @Column(name = "idServiceBesoin")
+    Integer idServiceBesoin;
+    public Commande(Integer numero, String nom, String date, Boolean livraisonPartielle, String modePaiement,
+            String categorie, String designation, double quantite, double prixUnitaire, double tva, double ttc,
+            Integer idServiceBesoin) {
+        this.numero = numero;
         this.nom = nom;
         this.date = date;
-        this.numero = numero;
         this.livraisonPartielle = livraisonPartielle;
         this.modePaiement = modePaiement;
         this.categorie = categorie;
@@ -52,8 +55,15 @@ public class Commande {
         this.prixUnitaire = prixUnitaire;
         this.tva = tva;
         this.ttc = ttc;
+        this.idServiceBesoin = idServiceBesoin;
     }
     public Commande() {
+    }
+    public Integer getNumero() {
+        return numero;
+    }
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
     public String getNom() {
         return nom;
@@ -66,12 +76,6 @@ public class Commande {
     }
     public void setDate(String date) {
         this.date = date;
-    }
-    public Integer getNumero() {
-        return numero;
-    }
-    public void setNumero(Integer numero) {
-        this.numero = numero;
     }
     public Boolean getLivraisonPartielle() {
         return livraisonPartielle;
@@ -121,4 +125,11 @@ public class Commande {
     public void setTtc(double ttc) {
         this.ttc = ttc;
     }
+    public Integer getIdServiceBesoin() {
+        return idServiceBesoin;
+    }
+    public void setIdServiceBesoin(Integer idServiceBesoin) {
+        this.idServiceBesoin = idServiceBesoin;
+    }
+    
 }

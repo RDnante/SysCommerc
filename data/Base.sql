@@ -50,7 +50,8 @@ create table commande(
     designation varchar(50),
     quantite decimal,
     tva decimal,
-    ttc decimal
+    ttc decimal,
+    idServiceBesoin int
 );
 
 create table bonDeCommande (

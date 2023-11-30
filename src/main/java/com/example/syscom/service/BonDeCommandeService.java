@@ -7,17 +7,22 @@ import java.util.List;
 import javax.activation.CommandObject;
 
 import com.example.syscom.repository.FournisseurRepository;
+import com.example.syscom.repository.Service_besoinRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.syscom.model.Article;
 import com.example.syscom.model.BonDeCommande;
 import com.example.syscom.model.BonDeCommandeB;
+import com.example.syscom.model.BonDeCommande_Commandes;
 import com.example.syscom.model.Commande;
 import com.example.syscom.model.Fournisseur;
+import com.example.syscom.model.Service_besoin;
 import com.example.syscom.model.Stock_fournisseur;
 import com.example.syscom.repository.ArticleRepository;
 import com.example.syscom.repository.BonDeCommandeBRepository;
+import com.example.syscom.repository.BonDeCommande_CommandesRepository;
 import com.example.syscom.repository.CommandeRepository;
 import com.example.syscom.repository.Stock_fournisseurRepository;
 
@@ -37,6 +42,10 @@ public class BonDeCommandeService {
     Stock_fournisseurService stock_fournisseurService;
     @Autowired
     BonDeCommandeBRepository bonDeCommandeBRepository;
+    @Autowired
+    BonDeCommande_CommandesRepository bonDeCommande_CommandesRepository;
+    @Autowired
+    Service_besoinRepository service_besoinRepository;
 
     public List<Article> getAllArticle()throws Exception{
         try {
@@ -119,8 +128,19 @@ public class BonDeCommandeService {
             b.setIdFournisseur(idFournisseur);
             b.setDateConfirmation(String.valueOf(LocalDate.now()));
             bonDeCommandeBRepository.save(b);
+            List<BonDeCommandeB> AllB = bonDeCommandeBRepository.findAll();
+            BonDeCommandeB bb = AllB.get(AllB.size());
             for (int i = 0; i < bdc.getCommandes().size(); i++) {
                 commandeRepository.save(bdc.getCommandes().get(i));
+                List<Commande> cc = commandeRepository.findAll();
+                Commande cd = cc.get(cc.size());
+                BonDeCommande_Commandes bdcc = new BonDeCommande_Commandes();
+                bdcc.setIdBonDeCommande(bb.getIdBonDeCommande());
+                bdcc.setIdCommande(cd.getNumero());
+                bonDeCommande_CommandesRepository.save(bdcc);
+                Service_besoin sb = service_besoinRepository.findById(cd.getIdServiceBesoin()).get();
+                sb.setStatus(1);
+                service_besoinRepository.save(sb);
             }
         } catch (Exception e) {
             e.printStackTrace();
