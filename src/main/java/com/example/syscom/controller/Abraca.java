@@ -3,6 +3,7 @@ package com.example.syscom.controller;
 import com.example.syscom.model.*;
 import com.example.syscom.repository.ArticleRepository;
 import com.example.syscom.repository.FournisseurRepository;
+import com.example.syscom.repository.LoginRepository;
 import com.example.syscom.repository.ServiceRepository;
 import com.example.syscom.repository.Service_besoinRepository;
 import com.example.syscom.service.BonDeCommandeService;
@@ -43,6 +44,8 @@ public class Abraca {
     ServiceService serviceService;
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    LoginRepository loginRepository;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -59,14 +62,30 @@ public class Abraca {
     }
 
     @PostMapping("/dash")
-    public String dash(Model model, HttpServletRequest request,@RequestParam("nom") String nom,@RequestParam("mdp") String mdp) {
+    public String dash(Model model, HttpServletRequest request,@RequestParam("mdp") String mdp) {
 
-        ServiceC s = serviceRepository.loginServie(nom,mdp);
-        if (s != null) {
+        // ServiceC s = serviceRepository.loginServie(nom,mdp);
+        Login l = loginRepository.authentification(mdp);
+        System.out.println(l);
+        if (l != null) {
+            // System.out.println("sb,b");
+            Service s = serviceRepository.findById(l.getIdservice()).get();
+            model.addAttribute("service", s);
             HttpSession session = request.getSession();
-            session.setAttribute("idservice",s.getIdService());
-
-            return "acceuil";
+            session.setAttribute("idservice",l.getIdservice());
+            System.out.println(l.getIdposte());
+            if (l.getIdposte()==1&&l.getIdservice()==3) {
+                List<Article> all = articleRepository.findAll();
+                model.addAttribute("article", all);
+                return "magasin";
+            }
+            if (l.getIdposte()==1) {
+                List<Article> all = articleRepository.findAll();
+                model.addAttribute("article", all);
+                return "employee";
+            }else{
+                return "acceuil";
+            }
         }
         else {
             return "redirect:/login";
@@ -77,6 +96,13 @@ public class Abraca {
     public String dashi(Model model) {
 
         return "acceuil";
+    }
+
+    @GetMapping("/besoinE")
+    public String besoinE(Model model) {
+        List<Article> all = articleRepository.findAll();
+        model.addAttribute("article", all);
+        return "employee";
     }
 
     @GetMapping("/besoin")
@@ -223,7 +249,7 @@ public class Abraca {
 
     @GetMapping("/fournisseur/listbesoin")
     public String listbesoin(Model model) {
-        List<ServiceC> list = serviceService.getServiceWithBesoin();
+        List<Service> list = serviceService.getServiceWithBesoin();
 
         model.addAttribute("listservice",list);
 
@@ -237,7 +263,7 @@ public class Abraca {
         Integer idfournisseur = Integer.valueOf(stringid);
         List<VerifStock> verifStocks = serviceBesoinService.getVerifStock(id,idfournisseur);
 
-        ServiceC service  = serviceRepository.findById(id).get();
+        Service service  = serviceRepository.findById(id).get();
 
         model.addAttribute("listverifbesoin",verifStocks);
         model.addAttribute("service",service);

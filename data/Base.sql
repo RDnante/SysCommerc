@@ -1,9 +1,20 @@
 create database syscom;
 \c syscom
+
+create table poste(
+    idPoste serial primary key,
+    nom varchar(30)
+);
 create table service (
     id_service serial primary key,
-    nom varchar(30),
-    mot_passe varchar(30)
+    nom varchar(30)
+);
+
+create table login(
+    idLogin serial primary key,
+    idService int references service(id_service),
+    idPoste int references poste(idPoste),
+    password varchar(30)
 );
 
 create table categorie (
@@ -11,10 +22,23 @@ create table categorie (
     nom varchar(40)
 );
 
+CREATE TABLE typeGestion(
+    idTypeGestion SERIAL PRIMARY KEY,
+    libelle VARCHAR(50),
+    typeGestion VARCHAR(50)
+);
+
+CREATE TABLE unite(
+    idUnite SERIAL PRIMARY KEY,
+    libelle VARCHAR(50)
+);
+
 create table article (
     id_article serial primary key,
     id_categorie int references categorie(id_categorie),
-    nom varchar(40)
+    nom varchar(40),
+    idUnite int references unite(idUnite),
+    idTypeGestion int references typeGestion(idTypeGestion)
 );
 
 create table service_besoin (
@@ -64,4 +88,34 @@ create table bonDeCommande_commandes (
     idBonDeCommande_commande serial primary key,
     idBonDeCommande int references  bonDeCommande(idBonDeCommande),
     idCommande int references commande(idCommande)
+);
+
+
+CREATE TABLE entreeStock(
+    idEntreeStock SERIAL PRIMARY KEY,
+    idArticle INT,
+    quantite DECIMAL,
+    prixUnitaire DECIMAL,
+    dateEntree DATE,
+    FOREIGN KEY (idArticle) REFERENCES article(id_article)
+);
+
+CREATE TABLE sortiestock(
+    idSortieStock SERIAL PRIMARY KEY,
+    idArticle INT,
+    quantiteTotal DECIMAL,
+    dateSortie DATE,
+    FOREIGN KEY (idArticle) REFERENCES article(id_article)
+);
+
+CREATE TABLE mouvementSortie(
+    idMouvementSortie SERIAL PRIMARY KEY,
+    idSortieStock INT,
+    idEntreeStock INT,
+    idArticle INT,
+    quantite DECIMAL,
+    prixUnitaire DECIMAL,
+    FOREIGN KEY (idArticle) REFERENCES article(id_article),
+    FOREIGN KEY (idEntreeStock) REFERENCES entreeStock(idEntreeStock),
+    FOREIGN KEY (idSortieStock) REFERENCES sortieStock(idSortieStock)
 );

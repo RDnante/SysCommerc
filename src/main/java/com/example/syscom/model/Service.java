@@ -11,9 +11,6 @@ public class Service {
     @Column(name = "nom")
     String nom;
 
-    @Column(name = "mot_passe")
-    String mot_passe;
-
     public Service() {
     }
 
@@ -31,13 +28,5 @@ public class Service {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getMot_passe() {
-        return mot_passe;
-    }
-
-    public void setMot_passe(String mot_passe) {
-        this.mot_passe = mot_passe;
     }
 }

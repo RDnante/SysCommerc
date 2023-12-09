@@ -19,8 +19,24 @@ public class Article {
     @Column(name = "nom")
     String nom;
 
+    @Column(name = "idunite")
+    Integer idunite;
+
+    @Column(name = "idtypegestion")
+    Integer idtypegestion;
+
     @Transient
     Categorie categorie;
+
+    public Article(Integer id_article, Integer id_categorie, String nom, Integer idunite, Integer idtypegestion,
+            Categorie categorie) {
+        this.id_article = id_article;
+        this.id_categorie = id_categorie;
+        this.nom = nom;
+        this.idunite = idunite;
+        this.idtypegestion = idtypegestion;
+        this.categorie = categorie;
+    }
 
     public Article() {
     }
@@ -33,6 +49,14 @@ public class Article {
         this.id_article = id_article;
     }
 
+    public Integer getId_categorie() {
+        return id_categorie;
+    }
+
+    public void setId_categorie(Integer id_categorie) {
+        this.id_categorie = id_categorie;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -41,12 +65,20 @@ public class Article {
         this.nom = nom;
     }
 
-    public Integer getId_categorie() {
-        return id_categorie;
+    public Integer getIdunite() {
+        return idunite;
     }
 
-    public void setId_categorie(Integer id_categorie) {
-        this.id_categorie = id_categorie;
+    public void setIdunite(Integer idunite) {
+        this.idunite = idunite;
+    }
+
+    public Integer getIdtypegestion() {
+        return idtypegestion;
+    }
+
+    public void setIdtypegestion(Integer idtypegestion) {
+        this.idtypegestion = idtypegestion;
     }
 
     public Categorie getCategorie() {
@@ -56,4 +88,7 @@ public class Article {
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
+    
+    
+    
 }

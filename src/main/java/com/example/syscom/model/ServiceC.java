@@ -16,7 +16,6 @@ public class ServiceC {
 
     public ServiceC() {
     }
-
     public Integer getIdService() {
         return idService;
     }

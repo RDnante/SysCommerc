@@ -17,20 +17,20 @@ public class ServiceService {
     @Autowired
     Service_besoinRepository serviceBesoinRepository;
 
-    public Integer logService(ServiceC s)throws Exception{
-        try {
-            List<ServiceC> all = serviceRepository.findAll();
-            for (int i = 0; i < all.size(); i++) {
-                if (all.get(i).getIdService()==s.getIdService()) {
-                    return s.getIdService();
-                }
-            }
-            return null;
-        } catch (Exception e) {
-            throw new Exception("logService");
-            // TODO: handle exception
-        }
-    }
+    // public Integer logService(ServiceC s)throws Exception{
+    //     try {
+    //         List<Service> all = serviceRepository.findAll();
+    //         for (int i = 0; i < all.size(); i++) {
+    //             if (all.get(i).getIdService()==s.getIdService()) {
+    //                 return s.getIdService();
+    //             }
+    //         }
+    //         return null;
+    //     } catch (Exception e) {
+    //         throw new Exception("logService");
+    //         // TODO: handle exception
+    //     }
+    // }
 
     public Boolean logRH(ServiceC s)throws Exception{
         try {
@@ -58,13 +58,13 @@ public class ServiceService {
     //     }
     // }
 
-    public List<ServiceC> getServiceWithBesoin() {
+    public List<com.example.syscom.model.Service> getServiceWithBesoin() {
         List<Integer> listid = serviceBesoinRepository.getidserviceWithBesoin();
 
-        List<ServiceC> valiny = new ArrayList<ServiceC>();
+        List<com.example.syscom.model.Service> valiny = new ArrayList<com.example.syscom.model.Service>();
 
         for(Integer i : listid) {
-            ServiceC s = serviceRepository.findById(i).get();
+            com.example.syscom.model.Service s = serviceRepository.findById(i).get();
             valiny.add(s);
         }
 
