@@ -73,8 +73,19 @@ public class Abraca {
             model.addAttribute("service", s);
             HttpSession session = request.getSession();
             session.setAttribute("idservice",l.getIdservice());
+            session.setAttribute("service", s);
             System.out.println(l.getIdposte());
-            if (l.getIdposte()==1&&l.getIdservice()==3) {
+            if (l.getIdposte()==3&&l.getIdservice()==3) {
+                List<Article> all = articleRepository.findAll();
+                model.addAttribute("article", all);
+                return "achat";
+            }
+            if (l.getIdposte()==4&&l.getIdservice()==3) {
+                List<Article> all = articleRepository.findAll();
+                model.addAttribute("article", all);
+                return "vente";
+            }
+            if (l.getIdposte()==2&&l.getIdservice()==3) {
                 List<Article> all = articleRepository.findAll();
                 model.addAttribute("article", all);
                 return "magasin";
@@ -92,28 +103,34 @@ public class Abraca {
         }
     }
 
-    @GetMapping("/dash")
-    public String dashi(Model model) {
+    // @GetMapping("/dash")
+    // public String dashi(Model model) {
 
-        return "acceuil";
-    }
+    //     return "acceuil";
+    // }
 
     @GetMapping("/besoinE")
-    public String besoinE(Model model) {
+    public String besoinE(Model model, HttpServletRequest request) {
         List<Article> all = articleRepository.findAll();
         model.addAttribute("article", all);
+        HttpSession session = request.getSession();
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
         return "employee";
     }
 
     @GetMapping("/besoin")
-    public String besoin(Model model) {
+    public String besoin(Model model, HttpServletRequest request) {
         List<Article> all = articleRepository.findAll();
         model.addAttribute("article", all);
+        HttpSession session = request.getSession();
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
         return "besoin";
     }
 
     @PostMapping("/besoin/inserer")
-    public String inserer_besoin(Model model, @RequestParam("article") String article, @RequestParam("quantite") Double quantite){
+    public String inserer_besoin(Model model, HttpServletRequest request, @RequestParam("article") String article, @RequestParam("quantite") Double quantite){
 
         Service_besoin s = new Service_besoin();
         s.setId_service(1);
@@ -121,7 +138,9 @@ public class Abraca {
         s.setQuantite(quantite);
         s.setDate(LocalDate.now());
         s.setStatus(0);
-
+        HttpSession session = request.getSession();
+        Service ss = (Service)session.getAttribute("service");
+        model.addAttribute("service", ss);
         serviceBesoinRepository.save(s);
 
         return "acceuil";
@@ -135,6 +154,8 @@ public class Abraca {
         List<Proforma> list = proformaService.getProforma(idservice);
         System.out.println("size list"+list.size());
         model.addAttribute("listproforma",list);
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
 
         return "proformalist";
     }
@@ -146,6 +167,8 @@ public class Abraca {
         Integer idservice = Integer.valueOf(si);
         Proforma p = proformaService.getProformabyent(idservice,id);
         model.addAttribute("proforma",p);
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
 
         return "proforma";
     }
@@ -156,7 +179,8 @@ public class Abraca {
         String si = session.getAttribute("idservice").toString();
         Integer idservice = Integer.valueOf(si);
         List<BonDeCommande> listbd = bonDeCommandeService.listbon(idservice);
-
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
         model.addAttribute("listbon",listbd);
 
         return "boncommandelist";
@@ -175,6 +199,8 @@ public class Abraca {
                     allOk.add(all.get(i));
                  }
              }
+            Service s = (Service)session.getAttribute("service");
+            model.addAttribute("service", s);
              model.addAttribute("fournisseur", allOk);
          } catch (Exception e) {
              System.out.println(e);
@@ -187,6 +213,8 @@ public class Abraca {
         HttpSession session = request.getSession();
         String si = session.getAttribute("idservice").toString();
         Integer idservice = Integer.valueOf(si);
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
         try {
             BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(idservice, id);
             model.addAttribute("bdc", b);
@@ -202,6 +230,8 @@ public class Abraca {
     public String confirmation(Model model,@PathVariable Integer id,HttpServletRequest request){
         HttpSession session = request.getSession();
         String si = session.getAttribute("idservice").toString();
+        Service s = (Service)session.getAttribute("service");
+        model.addAttribute("service", s);
         Integer idservice = Integer.valueOf(si);
         try {
             BonDeCommande b = bonDeCommandeService.getBonDeCommandeByFournisseur(idservice, id);

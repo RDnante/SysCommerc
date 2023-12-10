@@ -1,9 +1,12 @@
 insert into poste(nom) values
                  ('employee'),
-                 ('chef');
+                 ('chef'),
+                 ('achat'),
+                 ('vente');
 
 insert into service values (default,'economique');
 insert into service values (default,'securite');
+insert into service values (default,'magasin');
 insert into service values (default,'magasin');
 
 insert into login(idService,idPoste,password) values
@@ -12,7 +15,9 @@ insert into login(idService,idPoste,password) values
                  (2,1,'secu123E'),
                  (2,2,'secu123'),
                  (3,1,'mag123E'),
-                 (3,1,'mag123');
+                 (3,2,'mag123'),
+                 (3,3,'mag123A'),
+                 (3,4,'mag123V');
 
 INSERT INTO unite(libelle) VALUES
                 ('unite'),
@@ -31,8 +36,8 @@ insert into article values (default,1,'stylo',1,1);
 insert into article values  (default,2,'couteau',1,1);
 insert into article values  (default,3,'Riz',3,2);
 
-insert into fournisseur values (default,'jumbo');
-insert into fournisseur values (default,'cosmos');
+insert into fournisseur values (default,'jumbo','1234');
+insert into fournisseur values (default,'cosmos','1234');
 
 insert into stock_fournisseur values (default,1,1,150,340);
 insert into stock_fournisseur values (default,2,2,150,340);

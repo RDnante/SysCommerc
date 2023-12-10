@@ -52,8 +52,9 @@ create table service_besoin (
 
 create table fournisseur (
     id_fournisseur serial primary key,
-    nom varchar(50)
-);
+    nom varchar(50),
+    mdp varchar(30)
+);0
 
 
 create table stock_fournisseur (
