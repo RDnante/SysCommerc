@@ -73,14 +73,14 @@ CREATE TABLE Lieux (
 
 CREATE TABLE Immobilisations (
     ID_Immobilisation serial primary key,
-    Date DATE,
+    Date DATE default current_date,
     prix decimal,
     Compte_comptable VARCHAR(20),
     Numero VARCHAR(20),
     Type VARCHAR(50),
     Marque VARCHAR(50),
-    Modèle VARCHAR(50),
-    Numéro_série VARCHAR(50),
+    Modele VARCHAR(50),
+    Numero_serie VARCHAR(50),
     Description TEXT,
     Taux_amortissement DECIMAL(5,2),
     Neuf BOOLEAN,
@@ -89,3 +89,6 @@ CREATE TABLE Immobilisations (
     ID_Lieu INT,
     FOREIGN KEY (ID_Lieu) REFERENCES Lieux(ID_Lieu)
 );
+
+insert into Lieux values (default,'andoharanofotsy','latitude','longitude');
+insert into Immobilisations values (default,default,20000000,'101',01,'voiture','toyota','supra','1234','stutututu',20,true,true,'linaire',1);
