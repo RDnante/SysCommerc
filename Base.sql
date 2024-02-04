@@ -63,3 +63,29 @@ create table bonDeCommande(
     tva decimal,
     ttc decimal
 );
+
+CREATE TABLE Lieux (
+    ID_Lieu serial primary key,
+    Nom_endroit VARCHAR(100),
+    Latitude VARCHAR,
+    Longitude VARCHAR
+);
+
+CREATE TABLE Immobilisations (
+    ID_Immobilisation serial primary key,
+    Date DATE,
+    prix decimal,
+    Compte_comptable VARCHAR(20),
+    Numero VARCHAR(20),
+    Type VARCHAR(50),
+    Marque VARCHAR(50),
+    Modèle VARCHAR(50),
+    Numéro_série VARCHAR(50),
+    Description TEXT,
+    Taux_amortissement DECIMAL(5,2),
+    Neuf BOOLEAN,
+    Utilisable BOOLEAN,
+    Methode_amortissement VARCHAR(50),
+    ID_Lieu INT,
+    FOREIGN KEY (ID_Lieu) REFERENCES Lieux(ID_Lieu)
+);

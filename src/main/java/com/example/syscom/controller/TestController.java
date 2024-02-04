@@ -32,4 +32,10 @@ public class TestController {
 
         return "test";
     }
+
+    @GetMapping("/lin")
+    public String lin(Model model) {
+
+        return "linaire";
+    }
 }
