@@ -234,17 +234,20 @@
                             </tr>
                             </thead>
                             <tbody>
-<!--                            <tr th:each="s : ${proforma.getListStock()}">-->
-<!--                              <td th:text="${s.getId_article()}"></td>-->
-<!--                              <td th:text="${s.getQuantite()}">System Architect</td>-->
-<!--                              <td th:text="${s.getPrix_unitaire()}">Edinburgh</td>-->
-<!--                            </tr>-->
-                            <tr>
-                              <td>afafaf</td>
-                              <td>afafaf</td>
-                              <td>afafaf</td>
-                              <td>afafaf</td>
+                            <tr th:each="s : ${list_im}">
+                              <td th:text="${s.getPrix()}"></td>
+                              <td th:text="${s.getAm_debut_perio  de()}">System Architect</td>
+                              <td th:text="${s.getDotation()}">Edinburgh</td>
+                              <td th:text="${s.getAm_fin_periode()}">Edinburgh</td>
+                              <td th:text="${s.getValeur_net_comptable()}">Edinburgh</td>
+                              <td th:text="${s.getTaux_amortissement()}">Edinburgh</td>
                             </tr>
+<!--                            <tr>-->
+<!--                              <td>afafaf</td>-->
+<!--                              <td>afafaf</td>-->
+<!--                              <td>afafaf</td>-->
+<!--                              <td>afafaf</td>-->
+<!--                            </tr>-->
                             </tbody>
                           </table>
                         </div>

@@ -36,13 +36,13 @@ public class Immobilisations {
     @Column
     String description;
     @Column
-    Double taux_ammortissement;
+    Double taux_amortissement;
     @Column
     Boolean neuf;
     @Column
-    Boolean utilisation;
+    Boolean utilisable;
     @Column
-    String methode_amortissemt;
+    String methode_amortissement;
     @Column
     Integer id_lieu;
 
